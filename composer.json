@@ -1,5 +1,5 @@
 {
-    "name": "AO/TranslationBundle",
+    "name": "ao/translation-bundle",
     "type": "symfony-bundle",
     "description": "Doctrine as symfony translation provider + a nice gui for editing translations.",
     "keywords": ["symfony", "doctrine", "translation", "i18n"],
