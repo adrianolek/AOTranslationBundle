@@ -1,0 +1,41 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <img width="23" height="28" alt="Translations" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH3QEYFSAsdwjaSwAAAl1JREFUSMfF1k+I1VUUB/DPOEpKpTAhGbmzVUUIaREkF2kIgkTaTOLCxCRF1IUEuTGmyV0o1iLaDBgVbUQNHFtE6lHKDHFRBCmILcRBjBKnEf9U0+YM/Hz83vB+Mw878Phxz7nvfu+553u+93KfraddoJTSg2exHPNxExdwPCLudBWwlLIG7+OJmvB1fIC9EXFrRoCllF58jLcq7okEWYBZFf9prI6Ia00AZ7WMP2oBgz8jog9XWvwv4EgpZV4TwNmV7F7CFpzCUGXO3fyuxQMV/zvoz+9g4yMtpRzDSpzH4Tbzz+F7bMWreApjWBQRNzsGLKUsxCh6K7ExXMTSiu9NzMEnLeu8FhGHm9TwyRawyc3049scX8YBbKxZ55mmpOmriT2EXdiMq3gDq7GsZu4jTUnTjtrb8UPW6jF81Wbe741IU0pZkKBzWuKXsC7J8igez8UXN+z3SxFxsZWlR/FKDq9iX4rAeuzGHpzA8akksY39i+cj4my18QdTVWAVfsue/BAP43UsmQbYJFeW3KM0EfEj3svhSXzZhH04iM87Vpq0oczg3YYZjKck3s1WWtSRlkbEREQMpk5+g386BDyAFVmKz5pkOAl8Bi+nAj2XLTGaTK2z4WyhediBt9vVevZUu8mrZ6TC5A01037Fz6mtvfgD3+HFTq6n6dj+fBX8gp/yRIY7vQ+b2t9Zs9vYmb/xrOlfjY+0AxvJ9060+J/GF9jU7Qz3Y02NfwCfdjvDiWyFgZrYhnwd3MLcbgH2ZAvU2eJ8esyYNOMz2OD4dDI8hG14sOH/buBr/4f9B8HTktXjFvhcAAAAAElFTkSuQmCC" />
+        <span class="sf-toolbar-status">{{ collector.messagesCount }}</span>
+    {% endset %}
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Used</b>
+            <span>{{ collector.messagesCount }}</span>
+        </div>
+        <div class="sf-toolbar-info-piece">
+            <b>Untranslated</b>
+            <span>{{ collector.untranslatedCount }}</span>
+        </div>
+    {% endset %}
+    {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
+{% endblock %}
+
+{% block menu %}
+<span class="label">
+    <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH3QIYACQOm0lF4AAAA4ZJREFUWMO9mFuIVVUYx39nnCknsixCsSRDaZrywUoMJO1PKTTdC42hhy4PPWRYPQQlSJYYVkT2UA++aCBiUIIZSEVR/DMppWC6UFKoVJCGBGGjIzPm8aHvxOp09rnsvWcWLPbae33rW//13deGNpqkjr6PW6vfUNIsSVdImjFewCpZQGzXxkuBZ4BFQDVZdxJ4F1hn+/t0TamAaowl3Qi8Csxrg8/bwGrbPxUF1JUB5mnggzbBANwL7Ja0pKgKuxqAeRx4EehpQP+s7UoGr+nAe5JmB59cgLprg2AyH3gJGAO+AEbq6A/G8xPgVGJTVWA2cDnwmaQ+28O5JZScZg0wGTgBPAAMpN321qBbAtwM3A7cansA2BxzM4DnCxt1uPJv8ToG7AKON1k7bPsRScuAe4C5wNUx92N45dFOPa87Ga9Mxj3A3S3W7ojn/cBddXN9wEzbRztWWaKuOzJovgxD3pJ8qwKbJE0OtTVq83PZUCLSvgyaeZJuAp4AaifebXsX8AowKWPdnKJxKItxD7DZ9p+h1j+A2/SPaFe0aQ65VHakCd0sSTttvwXMBM4FNoXR/9WgjwK/FFXZxy1oz5HUa/skMBXYCFwfnlXf59p+LU8iT91+MfBpA9rjwGO235B0DbAKuM/2aUlPAetC9dWcYecEsMz2R/8CStLGD0B/EB8AtgEvx2YrgeeAs4FvgTuBQyVVHWO2z/pfcgVWA6cTd18TQPYDLwQYgCnAtBJLr65GkbompR0RFEeA3gwGh4BBYF+LjY4Bh4GL4xBZ7ZTtnv8gS4x7MFTVW8LJV9jur8sCHddDo8CDwPqCYEZsb5O02PaWBpVD+yVsAvA64MlIA5clwfNI5K+9TZavBTYABhaEN65qpbJKs5iQ1NXTgYuACyIoHo4AeCBLOhGPrgXeBG4AhoE9GabQHFCbgexS4OeM6T22F0kaijL4fdu3SPoqQLY26pLbO5KuSmryAUkXAjs7qYfKbBujpH044lol0s2GsK32vKyktj3q6UnAEPAN8DUwJb5vz+1lOW1oDnAJ8GHdzeUYsDDS0P6JsqHPI4ovjzTTlfSpwNK4ueybKJVtDak/lDH/qO2xuOlOiFGvj4rgvIz5KyX9HletCQF0fhs008bLy6olHqS7MCDbvwLfxevfBTrA67WUVcnp8un/gP4C0qoAo7YPSqrYzi/1sn/n1fidAYBHTFzPyOZAAAAAAElFTkSuQmCC" alt="Configuration" /></span>
+    <strong>Translations</strong>
+    <span class="count">
+        <span>{{ collector.messagesCount }}</span>
+    </span>
+</span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Translations</h2>
+
+    {% if not collector.messages %}
+        <p>
+            <em>No translations used.</em>
+        </p>
+    {% else %}
+        {% render url('ao_translation_profiler_translations', {'token': token}) %}
+    {% endif %}
+{% endblock %}
