@@ -20,7 +20,8 @@ new AO\TranslationBundle\AOTranslationBundle()
 Configuration
 =============
 
-Update app/config/config.yml:
+framework:
+    translator: ~
 
 parameters:
     translator.class: AO\TranslationBundle\Translation\Translator
