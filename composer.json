@@ -2,12 +2,14 @@
     "name": "ao/translation-bundle",
     "type": "symfony-bundle",
     "description": "Doctrine as symfony translation provider + a nice gui for editing translations.",
-    "keywords": ["symfony", "doctrine", "translation", "i18n"],
+    "keywords": ["symfony", "doctrine", "translation", "i18n", "ui", "gui", "multilanguage", "interface", "webinterface", "wordings"],
+    "homepage": "https://github.com/adrianolek/AOTranslationBundle",
     "license": "MIT",
     "authors": [
         {
             "name": "Adrian Olek",
-            "email": "adrianolek@gmail.com"
+            "email": "adrianolek@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -20,5 +22,5 @@
         "psr-0": { "AO\\TranslationBundle": "" }
     },
     "minimum-stability": "dev",
-    "target-dir": "AO/AOTranslationBundle"
+    "target-dir": "AO/TranslationBundle"
 }
