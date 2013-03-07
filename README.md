@@ -18,14 +18,13 @@ Require vendor libraries
 ------------------------
 
 Require `ao/translation-bundle` & `stof/doctrine-extensions-bundle` in `composer.json`:
-```json
-"require": {
-  "symfony/symfony": "2.1.*",
-  "_comment": "other packages",
-  "stof/doctrine-extensions-bundle": "1.1.*@dev",
-  "ao/translation-bundle": "1.0.*@dev",
-}
-```
+
+    "require": {
+      "symfony/symfony": "2.1.*",
+      "_comment": "other packages",
+      "stof/doctrine-extensions-bundle": "1.1.*@dev",
+      "ao/translation-bundle": "1.0.*@dev"
+    }
 
 Then install or update composer bundles with:
 
@@ -39,56 +38,75 @@ Add bundles to your application kernel
 --------------------------------------
 
 In `app/AppKernel.php` add:
-```php
-// app/AppKernel.php
-public function registerBundles()
-{
-    return array(
-        //...
-        new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-        new AO\TranslationBundle\AOTranslationBundle()
-        //...
-    );
-}
-```
+
+    // app/AppKernel.php
+    public function registerBundles()
+    {
+        return array(
+            //...
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new AO\TranslationBundle\AOTranslationBundle()
+            //...
+        );
+    }
 
 Configure translator
 --------------------
 
-```yml
-# app/config/config.yml
-# enable translation component
-framework:
-    translator: ~
+    # app/config/config.yml
+    # enable translation component
+    framework:
+        translator: ~
+    
+    # use AOTranslationBundle as translator
+    parameters:
+        translator.class: AO\TranslationBundle\Translation\Translator
+    
+    # configure locales avaliable for translation 
+    ao_translation:
+        locales:
+            en: ~
+            de: ~
+            fr: ~
+            
+Configure doctrine extensions bundle
+------------------------------------
 
-# use AOTranslationBundle as translator
-parameters:
-    translator.class: AO\TranslationBundle\Translation\Translator
+Timestampable behavior has to be enabled.
 
-# configure locales avaliable for translation 
-ao_translation:
-    locales:
-        en: ~
-        de: ~
-        fr: ~
-```
+    # app/config/config.yml
+    stof_doctrine_extensions:
+        orm:
+            default:
+                timestampable: true
 
 Update your db schema
 ---------------------
 
 If you use migrations:
-```
-app/console doctrine:migrations:diff
-app/console doctrine:migrations:migrate
-```
+
+    app/console doctrine:migrations:diff
+    app/console doctrine:migrations:migrate
+
 
 Otherwise:
-```
-app/console doctrine:schema:update
-```
+
+    app/console doctrine:schema:update
+    
+Add routing information
+-----------------------
+    
+    # app/config/routing.yml
+    ao_translation:
+        resource: "@AOTranslationBundle/Controller/"
+        type:     annotation
+        prefix:   / 
+
 
 Usage
 =====
+
+Use translation methods like described in [Symfony Translations](http://symfony.com/doc/current/book/translation.html) documentation.
 
 You can access translations panel by clicking on Translations in the web debug toolbar.
 
