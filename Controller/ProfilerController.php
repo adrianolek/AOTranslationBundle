@@ -2,6 +2,7 @@
 
 namespace AO\TranslationBundle\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -47,5 +48,32 @@ class ProfilerController extends ContainerAware
                         array('collector' => $collector,
                                 'form' => $form->createView(), 'messages' => $messages,
                                 'token' => $token, 'locales' => $locales));
+    }
+
+    /**
+     * @Route("/_profiler/{token}/translations/reset_action")
+     */
+    public function resetActionCacheAction($token, Request $request)
+    {
+        $profiler = $this->container->get('profiler');
+        $collector = $profiler->loadProfile($token)->getCollector('translation');
+        
+        $key = $collector->getCacheKey();
+        
+        $this->container->get('doctrine.orm.entity_manager')
+            ->getRepository('AOTranslationBundle:Cache')->resetActionCache($key);
+        
+        return new JsonResponse(array('status' => 'OK'));
+    }
+
+    /**
+     * @Route("/_profiler/{token}/translations/reset")
+     */
+    public function resetCacheAction($token, Request $request)
+    {
+        $this->container->get('doctrine.orm.entity_manager')
+            ->getRepository('AOTranslationBundle:Cache')->resetCache();
+
+        return new JsonResponse(array('status' => 'OK'));
     }
 }

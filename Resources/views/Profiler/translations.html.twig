@@ -6,13 +6,28 @@
 
 <form method="post" action="{{ path('ao_translation_profiler_translations', {'token': token}) }}" id="ao_translations_form">
     <div class="search">
-      <button type="submit" class="sf-button">
-          <span class="border-l">
-              <span class="border-r">
-                  <span class="btn-bg">SAVE TRANSLATIONS</span>
-              </span>
-          </span>
-      </button>
+        <button type="submit" class="sf-button">
+            <span class="border-l">
+                <span class="border-r">
+                    <span class="btn-bg">SAVE TRANSLATIONS</span>
+                </span>
+            </span>
+        </button>
+
+        <button type="button" class="sf-button" id="ao_translation_reset_cache" style="float: right">
+            <span class="border-l">
+                <span class="border-r">
+                    <span class="btn-bg">RESET CACHE</span>
+                </span>
+            </span>
+        </button>
+        <button type="button" class="sf-button" id="ao_translation_reset_action_cache" style="float: right; margin-right: 10px;">
+            <span class="border-l">
+                <span class="border-r">
+                    <span class="btn-bg">RESET ACTION CACHE</span>
+                </span>
+            </span>
+        </button>
     </div>
 
     <table>
@@ -168,6 +183,20 @@ $(function(){
         });
       }
       return false;
+    });
+    
+    $('#ao_translation_reset_action_cache').click(function(){
+        $('.flash').remove();
+        $.post('{{ path('ao_translation_profiler_resetactioncache', {'token': token})|e('js') }}', function(data){
+            $('#ao_translations_form').before('<div class="flash flash-notice">Action cache has been cleared!</div>');
+        });
+    });
+
+    $('#ao_translation_reset_cache').click(function(){
+        $('.flash').remove();
+        $.post('{{ path('ao_translation_profiler_resetcache', {'token': token})|e('js') }}', function(data){
+            $('#ao_translations_form').before('<div class="flash flash-notice">Cache has been cleared!</div>');
+        });
     });
 });
 </script>

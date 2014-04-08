@@ -12,6 +12,7 @@ use Gedmo\Timestampable\Timestampable;
  * @ORM\Table(name="ao_translation_cache",
  *   uniqueConstraints={@ORM\UniqueConstraint(name="action_uniq",columns={"bundle", "controller", "action"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AO\TranslationBundle\Entity\CacheRepository")
  */
 class Cache
 {

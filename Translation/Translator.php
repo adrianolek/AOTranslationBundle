@@ -12,7 +12,7 @@ class Translator extends BaseTranslator
 {
 
     private $doctrineCatalogues = array();
-    private $bundle, $controller, $action;
+    private $selector, $bundle, $controller, $action;
     
     /**
      * Store bundle, controller & action name
