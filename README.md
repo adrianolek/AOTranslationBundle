@@ -8,8 +8,9 @@ This bundle provides doctrine as translations storage and a nice web gui accessi
 Features
 ========
 
-* All translation messages are automatically saved in database (no extraction necessary)
+* All translation messages are automatically saved in the database (no extraction necessary)
 * Translation panel available in the Symfony web debug toolbar
+* Only messages used in current action are loaded from the database
 
 Installation
 ============
@@ -113,8 +114,14 @@ You can access translations panel by clicking on Translations in the web debug t
 ![Translations web debug toolbar](https://raw.github.com/adrianolek/AOTranslationBundle/master/Resources/doc/img/profiler.png)
 
 Now you can edit all your translation messages.
-Message parameters can be inserted directly into translation by clicking on the link in Parameters column.
-After you are done click `Save Translations`.
+Message parameters can be inserted directly into translation by clicking on the link in Parameters (2) column.
+After you are done click the `Save Translations` button (1).
+
+As the translator needs to know which messages are used in each action, it stores this relation in a cache table.
+Therefore, when a message is not used anymore it will still be visible in the translations panel.
+To clear the cached messages use the `Reset action cache` button, which will clear the cache for current action.
+Alternatively use the `Reset cache` button, which will clear cache for all actions.
+The cache will be rebuilt with the next execution of an action.
 
 ![Translations panel](https://raw.github.com/adrianolek/AOTranslationBundle/master/Resources/doc/img/panel.png)
 
