@@ -29,6 +29,16 @@ class TranslationListener
         $this->registry = $registry;
         $this->em = $registry->getManager();
     }
+    
+    public function onCommand(Event $event)
+    {
+        $command = $event->getCommand();
+        $class = get_class($command);
+        preg_match('/^(.+Bundle)\\\\.+\\\\(.+)$/', $class, $matches);
+        $bundle = str_replace('\\', '', $matches[1]);
+        
+        $this->translator->setCommand($bundle, $matches[2], $command->getName());
+    }
 
     /**
      * Save domain, message & cache info on kernel.terminate

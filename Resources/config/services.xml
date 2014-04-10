@@ -21,6 +21,7 @@
       </service>
       <service id="ao_translation.translation_listener" class="AO\TranslationBundle\EventListener\TranslationListener">
           <tag name="kernel.event_listener" event="kernel.terminate" method="onTerminate" />
+          <tag name="kernel.event_listener" event="console.command" method="onCommand" />
           <tag name="kernel.event_listener" event="console.terminate" method="onTerminate" />
           <argument type="service" id="translator" />
           <argument type="service" id="doctrine" />

@@ -41,6 +41,13 @@ class Translator extends BaseTranslator
         }
     }
     
+    public function setCommand($bundle, $controller, $action)
+    {
+        $this->bundle = $bundle;
+        $this->controller = $controller;
+        $this->action = $action;
+    }
+    
     /**
      * Load doctrine catalogue for selected locale.
      * @param unknown $locale
