@@ -34,7 +34,7 @@ class TranslationListener
      * Save domain, message & cache info on kernel.terminate
      * @param Event $event
      */
-    public function onKernelTerminate(Event $event)
+    public function onTerminate(Event $event)
     {
         $t_messages = $this->translator->getMessages();
 
