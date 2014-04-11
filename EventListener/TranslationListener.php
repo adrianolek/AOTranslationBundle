@@ -78,7 +78,7 @@ class TranslationListener
             $iterable = $q->iterate();
 
             while ($row = $iterable->next()) {
-                $row = $row[0];
+                $row = array_shift($row);
                 $domains[$row['name']] = $row['id'];
             }
 

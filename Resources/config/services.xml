@@ -26,6 +26,13 @@
           <argument type="service" id="translator" />
           <argument type="service" id="doctrine" />
       </service>
+
+      <service id="ao_translation.admin.message" class="AO\TranslationBundle\Admin\MessageAdmin">
+        <tag name="sonata.admin" manager_type="orm" group="Translations" label="Message"/>
+        <argument />
+        <argument>AO\TranslationBundle\Entity\Message</argument>
+        <argument />
+      </service>
     </services>
     
 </container>
