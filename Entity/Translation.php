@@ -44,6 +44,11 @@ class Translation
      */
     private $updatedAt;
     
+    public function __toString()
+    {
+        return $this->getContent();
+    }
+    
     public function getLocale() 
     {
       return $this->locale;

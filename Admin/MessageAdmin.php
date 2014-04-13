@@ -9,6 +9,13 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 class MessageAdmin extends Admin
 {
+    private $container;
+    
+    public function setContainer($container)
+    {
+        $this->container = $container;
+    }
+    
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->remove('create');
@@ -24,16 +31,25 @@ class MessageAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('identification')
+            ->add('domain')
+            ->add('identification')            
         ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        $locales = array_keys($this->container->getParameter('ao_translation.locales'));
         $listMapper
             ->addIdentifier('id')
             ->add('domain')
             ->add('identification')
         ;
+        
+        foreach($locales as $locale)
+        {
+            $listMapper->add($locale, null, array(
+                'code' => 'getLocaleTranslation',
+                'parameters' => array($locale)));
+        }
     }
 }
