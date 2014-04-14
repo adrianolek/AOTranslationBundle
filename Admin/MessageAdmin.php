@@ -23,8 +23,16 @@ class MessageAdmin extends Admin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $locales = array_keys($this->container->getParameter('ao_translation.locales'));
+        
         $formMapper
-            ->add('identification')
+            ->add('identification', 'text', array('read_only' => true))
+            ->add('translations', 'sonata_type_collection', array(
+                'type_options' => array('delete' => false),
+            ), array(
+                'edit' => 'inline',
+                'inline' => 'table',
+            ))
         ;
     }
 
@@ -51,5 +59,20 @@ class MessageAdmin extends Admin
                 'code' => 'getLocaleTranslation',
                 'parameters' => array($locale)));
         }
+        
+        $listMapper->add('_action', 'actions', array(
+            'actions' => array(
+                'edit' => array(),
+                'delete' => array(),
+            )
+        ));
+    }
+
+    public function createQuery($context = 'list')
+    {
+        $query = parent::createQuery($context);
+        $query->leftJoin('o.translations', 't');
+        $query->addSelect('t');
+        return $query;
     }
 }
