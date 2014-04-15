@@ -22,7 +22,13 @@ class AOTranslationExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         
-        $container->setParameter('ao_translation.locales', $config['locales']);
+        $locales = array();
+        foreach($config['locales'] as $locale => $options)
+        {
+            $locales[$locale] = isset($options['label']) ? $options['label'] : $locale;
+        }
+        
+        $container->setParameter('ao_translation.locales', $locales);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

@@ -46,16 +46,17 @@ class MessageAdmin extends Admin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $locales = array_keys($this->container->getParameter('ao_translation.locales'));
+        $locales = $this->container->getParameter('ao_translation.locales');
         $listMapper
             ->addIdentifier('id')
             ->add('domain')
             ->add('identification')
         ;
         
-        foreach($locales as $locale)
+        foreach($locales as $locale => $label)
         {
             $listMapper->add($locale, null, array(
+                'label' => $label,
                 'code' => 'getLocaleTranslation',
                 'parameters' => array($locale)));
         }

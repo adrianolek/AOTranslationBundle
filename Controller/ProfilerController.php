@@ -21,11 +21,12 @@ class ProfilerController extends ContainerAware
     public function translationsAction($token, Request $request)
     {
         $profiler = $this->container->get('profiler');
-        $locales = array_keys($this->container->getParameter('ao_translation.locales'));
+        $locales = $this->container->getParameter('ao_translation.locales');
+        
         $collector = $profiler->loadProfile($token)->getCollector('translation');
         
         $t_form = new Form\TranslationsType($this->container->get('doctrine'),
-                $collector->getMessages(), $locales);
+                $collector->getMessages(), array_keys($locales));
         
         $form = $this->container->get('form.factory')->create($t_form);
         $messages = $t_form->getMessages();

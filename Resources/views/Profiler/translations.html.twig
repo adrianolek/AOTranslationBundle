@@ -36,8 +36,8 @@
                  <tr>
                      <th class="domain">{{ domain }}</th>
                      <th class="parameters">Parameters</th>
-                      {% for locale in locales %}
-                          <th>{{ locale }}</th>
+                      {% for locale, label in locales %}
+                          <th>{{ label }}</th>
                       {% endfor %}
                  </tr>
                  {% for message in msgs %}
@@ -50,7 +50,7 @@
                                   {% endfor %}
                               </ul>
                           </td>
-                          {% for locale in locales %}
+                          {% for locale, label in locales %}
                             <td>
                               {{ form_widget(form[message.id][locale]) }}
                             </td>

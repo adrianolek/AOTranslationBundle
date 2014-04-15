@@ -67,7 +67,8 @@ Configure translator
     ao_translation:
         locales:
             en: ~
-            de: ~
+            de:
+              label: German
             fr: ~
             
 Configure doctrine extensions bundle
