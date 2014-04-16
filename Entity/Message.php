@@ -24,7 +24,7 @@ class Message
     private $domain;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",options={"collation"="utf8_bin"})
      */
     private $identification;
     

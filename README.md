@@ -11,6 +11,7 @@ Features
 * All translation messages are automatically saved in the database (no extraction necessary)
 * Translation panel available in the Symfony web debug toolbar
 * Only messages used in current action are loaded from the database
+* Translations management backend available via [SonataAdminBundle](https://github.com/sonata-project/SonataAdminBundle)
 
 Installation
 ============
@@ -110,6 +111,9 @@ Usage
 
 Use translation methods like described in [Symfony Translations](http://symfony.com/doc/current/book/translation.html) documentation.
 
+Translations panel
+------------------
+
 You can access translations panel by clicking on Translations in the web debug toolbar.
 
 ![Translations web debug toolbar](https://raw.github.com/adrianolek/AOTranslationBundle/master/Resources/doc/img/profiler.png)
@@ -126,3 +130,9 @@ The cache will be rebuilt with the next execution of an action.
 
 ![Translations panel](https://raw.github.com/adrianolek/AOTranslationBundle/master/Resources/doc/img/panel.png)
 
+Translations backend
+--------------------
+
+In order to use translations backend you need to install [SonataAdminBundle](http://sonata-project.org/bundles/admin/master/doc/index.html) and [SonataDoctrineORMAdminBundle](http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/index.html).
+Please refer to their installation guide.
+After installation and configuration the backend will be available under `/admin/ao/translation/message/list`.
