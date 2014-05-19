@@ -11,20 +11,26 @@
     </parameters>
 
     <services>
+      <service id="ao_translation.entity_manager" class="%doctrine.orm.entity_manager.class%" factory-service="doctrine" factory-method="getManager">
+          <argument>%ao_translation.entity_manager%</argument>
+      </service>
+
       <service id="ao_translation.loader.doctrine" class="%ao_translation.loader.doctrine.class%">
           <tag name="translation.loader" format="doctrine" alias="ao"/>
           <argument type="service" id="service_container" />
       </service>
+
       <service id="ao_translation.data_collector" class="%ao_translation.data_collector.class%">
           <tag name="data_collector" template="AOTranslationBundle:Collector:translation" id="translation" />
           <argument type="service" id="service_container" />
       </service>
+
       <service id="ao_translation.translation_listener" class="AO\TranslationBundle\EventListener\TranslationListener">
           <tag name="kernel.event_listener" event="kernel.terminate" method="onTerminate" />
           <tag name="kernel.event_listener" event="console.command" method="onCommand" />
           <tag name="kernel.event_listener" event="console.terminate" method="onTerminate" />
           <argument type="service" id="translator" />
-          <argument type="service" id="doctrine" />
+          <argument type="service" id="ao_translation.entity_manager" />
       </service>
 
       <service id="ao_translation.admin.message" class="AO\TranslationBundle\Admin\MessageAdmin">

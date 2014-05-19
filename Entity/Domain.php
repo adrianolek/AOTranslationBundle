@@ -36,7 +36,7 @@ class Domain
     
     public function __construct()
     {
-      $this->messages = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
     
     public function __toString()
@@ -46,16 +46,16 @@ class Domain
     
     public function getId() 
     {
-      return $this->id;
+        return $this->id;
     }
 
     public function getName() 
     {
-      return $this->name;
+        return $this->name;
     }
     
     public function setName($value) 
     {
-      $this->name = $value;
+        $this->name = $value;
     }
 }

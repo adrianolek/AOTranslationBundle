@@ -105,6 +105,18 @@ Add routing information
         type:     annotation
         prefix:   / 
 
+Use separate database connection for storing translations
+---------------------------------------------------------
+
+This enables multiple devs to collaborate on the same translations.
+
+Configure your additional entity_manager per [Symfony docs](http://symfony.com/doc/current/cookbook/doctrine/multiple_entity_managers.html).
+
+    #app/config/config.yml
+    ao_translation:
+        entity_manager: name_of_your_custom_entity_manager
+
+When creating your schema with `app/console` don't forget to add `--em=name_of_your_custom_entity_manager` option.
 
 Usage
 =====
