@@ -25,8 +25,10 @@ class ProfilerController extends ContainerAware
         
         $collector = $profiler->loadProfile($token)->getCollector('translation');
         
-        $t_form = new Form\TranslationsType($this->container->get('doctrine'),
-                $collector->getMessages(), array_keys($locales));
+        $t_form = new Form\TranslationsType(
+            $this->container->get('ao_translation.entity_manager'),
+            $collector->getMessages(), array_keys($locales)
+        );
         
         $form = $this->container->get('form.factory')->create($t_form);
         $messages = $t_form->getMessages();
@@ -61,7 +63,7 @@ class ProfilerController extends ContainerAware
         
         $key = $collector->getCacheKey();
         
-        $this->container->get('doctrine.orm.entity_manager')
+        $this->container->get('ao_translation.entity_manager')
             ->getRepository('AOTranslationBundle:Cache')->resetActionCache($key);
         
         return new JsonResponse(array('status' => 'OK'));
@@ -72,7 +74,7 @@ class ProfilerController extends ContainerAware
      */
     public function resetCacheAction($token, Request $request)
     {
-        $this->container->get('doctrine.orm.entity_manager')
+        $this->container->get('ao_translation.entity_manager')
             ->getRepository('AOTranslationBundle:Cache')->resetCache();
 
         return new JsonResponse(array('status' => 'OK'));

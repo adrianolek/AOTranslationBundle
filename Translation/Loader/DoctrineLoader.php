@@ -20,7 +20,7 @@ class DoctrineLoader implements LoaderInterface
 
     public function __construct(ContainerInterface $container)
     {
-        $this->em = $container->get('doctrine')->getManager();
+        $this->em = $container->get('ao_translation.entity_manager');
     }
     
     public function load($resource, $locale, $domain = 'messages')
