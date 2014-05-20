@@ -42,6 +42,7 @@ class TranslationDataCollector extends DataCollector
         
         $this->data['messages'] = array();
         $this->data['unatranslated_count'] = 0;
+        
         foreach($this->container->get('translator')->getMessages() as $domain => $messages)
         {
             $this->data['messages'][$domain] = array_keys($messages);

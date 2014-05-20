@@ -3,11 +3,11 @@ namespace AO\TranslationBundle\EventListener;
 use AO\TranslationBundle\Entity\Cache;
 use AO\TranslationBundle\Entity\Message;
 use AO\TranslationBundle\Entity\Domain;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use AO\TranslationBundle\Translation\Translator;
 use Symfony\Component\EventDispatcher\Event;
 use AO\TranslationBundle\Translation;
 use Doctrine\Bundle\DoctrineBundle;
+use Doctrine\ORM\EntityManager;
 
 /**
  * @author Adrian Olek <adrianolek@gmail.com>
@@ -16,18 +16,15 @@ use Doctrine\Bundle\DoctrineBundle;
  */
 class TranslationListener
 {
-
     /**
-     * 
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $em;
 
-    public function __construct(Translator $translator, Registry $registry)
+    public function __construct(Translator $translator, EntityManager $entityManager)
     {
         $this->translator = $translator;
-        $this->registry = $registry;
-        $this->em = $registry->getManager();
+        $this->em = $entityManager;
     }
     
     public function onCommand(Event $event)
@@ -52,6 +49,7 @@ class TranslationListener
         $domains = array();
         // prepare cache ids array for not cached messages
         $caches = array();
+
         foreach ($t_messages as $domain => $messages) {
             foreach ($messages as $message) {
                 if ($message->isNew()) {
@@ -61,8 +59,11 @@ class TranslationListener
                 
                 if (!$message->isCached()) {
                     // we need cache ids only for not cached messages
-                    $caches[$message->getCacheKey()] = array('bundle' => $message->getBundle(), 'controller' => $message->getController(),
-                      'action' => $message->getAction());
+                    $caches[$message->getCacheKey()] = array(
+                        'bundle' => $message->getBundle(), 
+                        'controller' => $message->getController(),
+                        'action' => $message->getAction()
+                    );
                 }
             }
         }
@@ -71,8 +72,11 @@ class TranslationListener
         if ($domains) {
             // load existing domain ids
             $qb = $this->em->createQueryBuilder();
-            $qb->select('d.id, d.name')->from('\AO\TranslationBundle\Entity\Domain', 'd')->where('d.name IN (:names)')
-                    ->setParameter('names', array_keys($domains));
+            $qb 
+                ->select('d.id, d.name')->from('\AO\TranslationBundle\Entity\Domain', 'd')
+                ->where('d.name IN (:names)')
+                ->setParameter('names', array_keys($domains))
+            ;
 
             $q = $qb->getQuery();
             $iterable = $q->iterate();
@@ -98,15 +102,18 @@ class TranslationListener
         foreach ($caches as &$cache) {
             // load existing cache ids
             $qb = $this->em->createQueryBuilder();
-            $qb->select('c')->from('\AO\TranslationBundle\Entity\Cache', 'c')
-                    ->where('c.bundle = :bundle AND c.controller = :controller AND c.action = :action')->setParameters($cache);
+            $qb
+                ->select('c')
+                ->from('\AO\TranslationBundle\Entity\Cache', 'c')
+                ->where('c.bundle = :bundle AND c.controller = :controller AND c.action = :action')
+                ->setParameters($cache)
+            ;
 
             $c = $qb->getQuery()->getOneOrNullResult();
 
             if ($c) {
                 $cache = $c->getId();
-            }
-            else {
+            } else {
                 // create missing cache and get its id
                 $c = new Cache();
                 $c->setBundle($cache['bundle']);
@@ -148,6 +155,7 @@ class TranslationListener
                 }
             }
         }
+
         $this->em->flush();
     }
 }

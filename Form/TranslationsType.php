@@ -3,7 +3,7 @@ namespace AO\TranslationBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Orm\EntityManager;
 
 /**
  * @author Adrian Olek <adrianolek@gmail.com>
@@ -12,14 +12,23 @@ class TranslationsType extends AbstractType
 {
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $em;
-    private $messages, $locales;
 
-    public function __construct(Registry $registry, $messages, $locales)
+    /**
+     * @var array
+     */
+    private $messages;
+
+    /**
+     * @var array
+     */
+    private $locales;
+
+    public function __construct(EntityManager $entityManager, $messages, $locales)
     {
-        $this->em = $registry->getManager();
+        $this->em = $entityManager;
         $this->messages = $messages;
         $this->locales = $locales;
     }

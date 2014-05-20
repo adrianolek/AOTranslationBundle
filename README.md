@@ -5,6 +5,20 @@ This bundle provides doctrine as translations storage and a nice web gui accessi
 
 [![Build Status](https://secure.travis-ci.org/adrianolek/AOTranslationBundle.png)](http://travis-ci.org/adrianolek/AOTranslationBundle)
 
+* [Features](#features)
+* [Installation](#installation)
+  * [Require vendor libraries](#require-vendor-libraries)
+  * [Add bundles to your application kernel](#add-bundles-to-your-application-kernel)
+  * [Configure translator](#configure-translator)
+  * [Configure doctrine extensions bundle](#configure-doctrine-extensions-bundle)
+  * [Update your db schema](#update-your-db-schema)
+  * [Add routing information](#add-routing-information)
+* [Usage](#usage)
+  * [Translations panel](#translations-panel)
+  * [Translations backend](#translations-backend)
+* [Additional features](#additional-features)
+  * [Using separate database connection for storing translations](#use-separate-database-connection-for-storing-translations)
+
 Features
 ========
 
@@ -105,7 +119,6 @@ Add routing information
         type:     annotation
         prefix:   / 
 
-
 Usage
 =====
 
@@ -136,3 +149,42 @@ Translations backend
 In order to use translations backend you need to install [SonataAdminBundle](http://sonata-project.org/bundles/admin/master/doc/index.html) and [SonataDoctrineORMAdminBundle](http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/index.html).
 Please refer to their installation guide.
 After installation and configuration the backend will be available under `/admin/ao/translation/message/list`.
+
+Additional features
+===================
+
+Using separate database connection for storing translations
+------------------------------------------------------------
+
+In case you need to share the translations database (eg. when multiple developers collaborate) you can [configure separate entity manager](http://symfony.com/doc/current/cookbook/doctrine/multiple_entity_managers.html) for the bundle.
+
+    # app/config/config.yml
+    doctrine:
+        dbal:
+            default_connection: default
+            connections:
+                default:
+                    ...
+                # configure translations database connection
+                translations:
+                    ...
+                    
+    orm:
+        ...
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    ...
+            translations:
+                connection: translations
+                mappings:
+                    AOTranslationBundle: ~
+                    
+    ao_translation:
+        entity_manager: translations
+
+To create translations schema add use `--em` parameter like:
+
+    app/console doctrine:schema:create --em=translations
