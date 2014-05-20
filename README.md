@@ -17,7 +17,7 @@ This bundle provides doctrine as translations storage and a nice web gui accessi
   * [Translations panel](#translations-panel)
   * [Translations backend](#translations-backend)
 * [Additional features](#additional-features)
-  * [Using separate database connection for storing translations](#use-separate-database-connection-for-storing-translations)
+  * [Using separate database connection for storing translations](#using-separate-database-connection-for-storing-translations)
 
 Features
 ========
