@@ -181,9 +181,16 @@ In case you need to share the translations database (eg. when multiple developer
                 connection: translations
                 mappings:
                     AOTranslationBundle: ~
-                    
+
     ao_translation:
         entity_manager: translations
+
+    stof_doctrine_extensions:
+        orm:
+            ...
+            # enable timestampable behavior for translations entity manager
+            translations:
+                timestampable: true
 
 To create translations schema add use `--em` parameter like:
 
