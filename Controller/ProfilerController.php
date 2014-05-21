@@ -22,14 +22,14 @@ class ProfilerController extends ContainerAware
     {
         $profiler = $this->container->get('profiler');
         $locales = $this->container->getParameter('ao_translation.locales');
-        
+
         $collector = $profiler->loadProfile($token)->getCollector('translation');
-        
+
         $t_form = new Form\TranslationsType(
             $this->container->get('ao_translation.entity_manager'),
             $collector->getMessages(), array_keys($locales)
         );
-        
+
         $form = $this->container->get('form.factory')->create($t_form);
         $messages = $t_form->getMessages();
 
@@ -38,6 +38,7 @@ class ProfilerController extends ContainerAware
             $t_form->save($form->getData());
             $this->container->get('session')->getFlashBag()
                     ->add('notice', 'Your translations have been saved!');
+
             return new RedirectResponse(
                     $this->container->get('router')
                             ->generate('_profiler',
@@ -60,12 +61,12 @@ class ProfilerController extends ContainerAware
     {
         $profiler = $this->container->get('profiler');
         $collector = $profiler->loadProfile($token)->getCollector('translation');
-        
+
         $key = $collector->getCacheKey();
-        
+
         $this->container->get('ao_translation.entity_manager')
             ->getRepository('AOTranslationBundle:Cache')->resetActionCache($key);
-        
+
         return new JsonResponse(array('status' => 'OK'));
     }
 

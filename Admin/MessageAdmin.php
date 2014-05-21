@@ -10,12 +10,12 @@ use Sonata\AdminBundle\Route\RouteCollection;
 class MessageAdmin extends Admin
 {
     private $container;
-    
+
     public function setContainer($container)
     {
         $this->container = $container;
     }
-    
+
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->remove('create');
@@ -24,7 +24,7 @@ class MessageAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $locales = array_keys($this->container->getParameter('ao_translation.locales'));
-        
+
         $formMapper
             ->add('identification', 'text', array('read_only' => true))
             ->add('translations', 'sonata_type_collection', array(
@@ -40,7 +40,7 @@ class MessageAdmin extends Admin
     {
         $datagridMapper
             ->add('domain')
-            ->add('identification')            
+            ->add('identification')
         ;
     }
 
@@ -52,15 +52,14 @@ class MessageAdmin extends Admin
             ->add('domain')
             ->add('identification')
         ;
-        
-        foreach($locales as $locale => $label)
-        {
+
+        foreach ($locales as $locale => $label) {
             $listMapper->add($locale, null, array(
                 'label' => $label,
                 'code' => 'getLocaleTranslation',
                 'parameters' => array($locale)));
         }
-        
+
         $listMapper->add('_action', 'actions', array(
             'actions' => array(
                 'edit' => array(),
@@ -74,6 +73,7 @@ class MessageAdmin extends Admin
         $query = parent::createQuery($context);
         $query->leftJoin('o.translations', 't');
         $query->addSelect('t');
+
         return $query;
     }
 }

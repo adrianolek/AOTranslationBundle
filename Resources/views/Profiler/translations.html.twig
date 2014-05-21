@@ -58,10 +58,10 @@
                       </tr>
                   {% endfor %}
             </tbody>
-        {% endfor %}        
+        {% endfor %}
     </table>
     {{ form_rest(form) }}
-    
+
     <div class="search">
       <button type="submit" class="sf-button">
           <span class="border-l">
@@ -141,7 +141,7 @@
 }).call(this);
 </script>
 <script type="text/javascript">
-    
+
 $(function(){
     var message_ids = [];
     var focused = null;
@@ -161,7 +161,7 @@ $(function(){
       {
         var event = document.createEvent('TextEvent');
         var parameter = $(this).data('parameter');
-        
+
         if(event.initTextEvent){
           var pos = focused.atCaret('getCaretPosition');
           event.initTextEvent('textInput', true, true, null, parameter);
@@ -171,7 +171,7 @@ $(function(){
         else // for firefox
         {
           focused.atCaret('insert', parameter);
-          focused.trigger('change');          
+          focused.trigger('change');
         }
       }
       else
@@ -184,7 +184,7 @@ $(function(){
       }
       return false;
     });
-    
+
     $('#ao_translation_reset_action_cache').click(function(){
         $('.flash').remove();
         $.post('{{ path('ao_translation_profiler_resetactioncache', {'token': token})|e('js') }}', function(data){

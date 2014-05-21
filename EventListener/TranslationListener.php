@@ -6,13 +6,12 @@ use AO\TranslationBundle\Entity\Domain;
 use AO\TranslationBundle\Translation\Translator;
 use Symfony\Component\EventDispatcher\Event;
 use AO\TranslationBundle\Translation;
-use Doctrine\Bundle\DoctrineBundle;
 use Doctrine\ORM\EntityManager;
 
 /**
  * @author Adrian Olek <adrianolek@gmail.com>
- * 
- * Stores translation messages info. 
+ *
+ * Stores translation messages info.
  */
 class TranslationListener
 {
@@ -26,14 +25,14 @@ class TranslationListener
         $this->translator = $translator;
         $this->em = $entityManager;
     }
-    
+
     public function onCommand(Event $event)
     {
         $command = $event->getCommand();
         $class = get_class($command);
         preg_match('/^(.+Bundle)\\\\.+\\\\(.+)$/', $class, $matches);
         $bundle = str_replace('\\', '', $matches[1]);
-        
+
         $this->translator->setCommand($bundle, $matches[2], $command->getName());
     }
 
@@ -56,11 +55,11 @@ class TranslationListener
                     // we need domain ids only for new messages
                     $domains[$domain] = null;
                 }
-                
+
                 if (!$message->isCached()) {
                     // we need cache ids only for not cached messages
                     $caches[$message->getCacheKey()] = array(
-                        'bundle' => $message->getBundle(), 
+                        'bundle' => $message->getBundle(),
                         'controller' => $message->getController(),
                         'action' => $message->getAction()
                     );
@@ -72,7 +71,7 @@ class TranslationListener
         if ($domains) {
             // load existing domain ids
             $qb = $this->em->createQueryBuilder();
-            $qb 
+            $qb
                 ->select('d.id, d.name')->from('\AO\TranslationBundle\Entity\Domain', 'd')
                 ->where('d.name IN (:names)')
                 ->setParameter('names', array_keys($domains))
@@ -138,7 +137,7 @@ class TranslationListener
                     $this->em->flush();
                     $message->setEntity($m);
                 }
-                
+
                 // add cache
                 if (!$message->isCached()) {
                     $m = $message->getEntity();
@@ -146,7 +145,7 @@ class TranslationListener
                     $m->getCaches()->add($this->em->getReference('\AO\TranslationBundle\Entity\Cache', $c));
                     $this->em->persist($m);
                 }
-                
+
                 // update parameters if needed
                 if ($message->getUpdateParameters()) {
                     $m = $message->getEntity();

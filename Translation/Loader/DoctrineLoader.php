@@ -4,7 +4,6 @@ use Symfony\Component\Translation\Loader\LoaderInterface;
 use AO\TranslationBundle\Translation\MessageCatalogue;
 use AO\TranslationBundle\Translation\Message;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Doctrine\Bundle\DoctrineBundle;
 
 /**
  * Loads messages stored as doctrine entities.
@@ -22,18 +21,18 @@ class DoctrineLoader implements LoaderInterface
     {
         $this->em = $container->get('ao_translation.entity_manager');
     }
-    
+
     public function load($resource, $locale, $domain = 'messages')
     {
-        
+
     }
 
     /**
      * Load messages cached for specified action.
-     * @param string $locale
-     * @param string $bundle
-     * @param string $controller
-     * @param string $action
+     * @param  string                                             $locale
+     * @param  string                                             $bundle
+     * @param  string                                             $controller
+     * @param  string                                             $action
      * @return \AO\TranslationBundle\Translation\MessageCatalogue
      */
     public function loadAction($locale, $bundle, $controller, $action)
@@ -71,9 +70,9 @@ class DoctrineLoader implements LoaderInterface
 
     /**
      * Load message for specified domain & id.
-     * @param string $id
-     * @param string $domain
-     * @param string $locale
+     * @param  string                                    $id
+     * @param  string                                    $domain
+     * @param  string                                    $locale
      * @return \AO\TranslationBundle\Translation\Message
      */
     public function loadMessage($id, $domain, $locale)
@@ -86,7 +85,7 @@ class DoctrineLoader implements LoaderInterface
         $m = $qb->getQuery()->getOneOrNullResult();
 
         $message = new Message($id, null, $domain);
-        
+
         if ($m) {
             $message->setParameters($m->getParameters());
             $message->setStatus('not_cached');
@@ -96,7 +95,7 @@ class DoctrineLoader implements LoaderInterface
                 $message->setContent($translation->getContent());
             }
         }
-        
+
         return $message;
     }
 }

@@ -8,7 +8,7 @@ use Gedmo\Timestampable\Timestampable;
 
 /**
  * @author Adrian Olek <adrianolek@gmail.com>
- * 
+ *
  * @ORM\Table(name="ao_translation_domains",
  *   uniqueConstraints={@ORM\UniqueConstraint(name="name_uniq",columns={"name"})})
  * @ORM\Entity
@@ -22,39 +22,39 @@ class Domain
      * @ORM\Column(type="string")
      */
     private $name;
-    
+
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Message", mappedBy="domain")
      */
     private $messages;
-    
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
     }
-    
+
     public function __toString()
     {
         return $this->getName();
     }
-    
-    public function getId() 
+
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getName() 
+    public function getName()
     {
         return $this->name;
     }
-    
-    public function setName($value) 
+
+    public function setName($value)
     {
         $this->name = $value;
     }

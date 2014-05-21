@@ -32,19 +32,19 @@ class TranslationsType extends AbstractType
         $this->messages = $messages;
         $this->locales = $locales;
     }
-    
+
     public function getLocales()
     {
         return $this->locales;
     }
-    
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // hidden input to store ids of edited messages
         $builder->add('ids', 'hidden');
-        
+
         $data = array();
-        
+
         $qb = $this->em->createQueryBuilder();
         $qb->select('m.id, m.parameters, m.identification, t.locale, t.content')
             ->from('AOTranslationBundle:Message', 'm')
@@ -52,23 +52,21 @@ class TranslationsType extends AbstractType
             ->join('m.domain', 'd')
             ->where('m.identification IN (:ids) AND d.name=:domain')
             ->orderBy('m.identification');
-        $q = $qb->getQuery();        
-        
-        foreach($this->messages as $domain => $messages)
-        {            
+        $q = $qb->getQuery();
+
+        foreach ($this->messages as $domain => $messages) {
             $q->setParameter('ids', $messages);
             $q->setParameter('domain', $domain);
-            
+
             // store additional infos for displaying in translations table
             $infos = array();
-            foreach($q->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY) as $row)
-            {
+            foreach ($q->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY) as $row) {
                 $infos[$row['id']] = array('id' => $row['id'],
                         'identification' => $row['identification'],
                         'parameters' => $row['parameters']);
-                
+
                 // embed message form row
-                $builder->add((string)$row['id'], new MessageType($this->locales));
+                $builder->add((string) $row['id'], new MessageType($this->locales));
                 // set default value
                 $data[$row['id']][$row['locale']] = $row['content'];
             }
@@ -81,12 +79,12 @@ class TranslationsType extends AbstractType
     {
         return 'translations';
     }
-    
+
     public function getMessages()
     {
         return $this->messages;
     }
-    
+
     /**
      * Save form data
      * @param array $data
@@ -95,9 +93,8 @@ class TranslationsType extends AbstractType
     {
         // get the ids of translations that changed
         $ids = explode(',', $data['ids']);
-        
-        if($ids)
-        {
+
+        if ($ids) {
             // load translations entities
             $qb = $this->em->createQueryBuilder();
             $qb->select('m')
@@ -105,26 +102,21 @@ class TranslationsType extends AbstractType
                 ->leftJoin('m.translations', 't')
                 ->where('m.id IN (:ids)');
             $q = $qb->getQuery();
-            
+
             $q->setParameter('ids', $ids);
 
-            foreach($q->getResult() as $message)
-            {
-                foreach($data[$message->getId()] as $locale => $content)
-                {
-                    if($content)
-                    {
+            foreach ($q->getResult() as $message) {
+                foreach ($data[$message->getId()] as $locale => $content) {
+                    if ($content) {
                         // set translation content
                         $message->setTranslation($locale, $content);
-                    }
-                    elseif($translation = $message->getLocaleTranslation($locale))
-                    {
+                    } elseif ($translation = $message->getLocaleTranslation($locale)) {
                         // or remove when empty
                         $this->em->remove($translation);
                     }
-                }                
+                }
             }
-            
+
             $this->em->flush();
         }
     }
@@ -136,16 +128,15 @@ class MessageType extends AbstractType
     {
         $this->locales = $locales;
     }
-    
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // add textarea for each translation locale
-        foreach($this->locales as $locale)
-        {
+        foreach ($this->locales as $locale) {
             $builder->add($locale, 'textarea', array('required' => false));
         }
     }
-    
+
     public function getName()
     {
       return 'message';

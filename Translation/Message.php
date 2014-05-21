@@ -46,57 +46,57 @@ class Message
     {
         $this->domain = $value;
     }
-    
-    public function getParameters() 
+
+    public function getParameters()
     {
       return $this->parameters;
     }
-    
-    public function setParameters($value) 
+
+    public function setParameters($value)
     {
       $this->parameters = $value;
     }
-    
-    public function getStatus() 
+
+    public function getStatus()
     {
       return $this->status;
     }
-    
-    public function setStatus($value) 
+
+    public function setStatus($value)
     {
       $this->status = $value;
     }
-        
-    public function getBundle() 
+
+    public function getBundle()
     {
       return $this->bundle;
     }
-    
-    public function setBundle($value) 
+
+    public function setBundle($value)
     {
       $this->bundle = $value;
     }
-    
-    public function getController() 
+
+    public function getController()
     {
       return $this->controller;
     }
-    
-    public function setController($value) 
+
+    public function setController($value)
     {
       $this->controller = $value;
     }
-    
-    public function getAction() 
+
+    public function getAction()
     {
       return $this->action;
     }
-    
-    public function setAction($value) 
+
+    public function setAction($value)
     {
       $this->action = $value;
     }
-    
+
     /**
      * Returns true when message hasn't been stored in db yet.
      * @return boolean
@@ -105,7 +105,7 @@ class Message
     {
       return $this->getStatus() == 'new';
     }
-    
+
     /**
      * Returns true when message has cache entry.
      * @return boolean
@@ -114,7 +114,7 @@ class Message
     {
       return $this->getStatus() == 'cached';
     }
-    
+
     /**
      * Set cache parameters.
      * @param string $bundle
@@ -125,7 +125,7 @@ class Message
     {
       list($this->bundle, $this->controller, $this->action) = func_get_args();
     }
-    
+
     /**
      * Get cache key - used in translation saving listener.
      * @return string
@@ -134,25 +134,25 @@ class Message
     {
       return $this->getBundle().':'.$this->getController().':'.$this->getAction();
     }
-    
+
     /**
      * Return message doctrine entity
      * @return \AO\TranslationBundle\Entity\Message
      */
-    public function getEntity() 
+    public function getEntity()
     {
       return $this->entity;
     }
-    
+
     /**
      * Set message doctrine entity
      * @param \AO\TranslationBundle\Entity\Message $value
      */
-    public function setEntity($value) 
+    public function setEntity($value)
     {
       $this->entity = $value;
     }
-    
+
     /**
      * Set current parameters of message and check if there is any change.
      * @param array $value
@@ -162,12 +162,12 @@ class Message
         if ($this->getParameters() != $value) {
           $this->updateParameters = true;
         }
-        
+
         $this->setParameters($value);
     }
-    
+
     /**
-     * Tells if the message parameters have changed comparing to those stored in db. 
+     * Tells if the message parameters have changed comparing to those stored in db.
      * @return boolean
      */
     public function getUpdateParameters()

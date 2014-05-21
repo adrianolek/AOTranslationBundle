@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    
+
     <parameters>
         <parameter key="ao_translation.data_collector.class">AO\TranslationBundle\DataCollector\TranslationDataCollector</parameter>
         <parameter key="ao_translation.loader.doctrine.class">AO\TranslationBundle\Translation\Loader\DoctrineLoader</parameter>
@@ -50,5 +50,5 @@
         <argument />
       </service>
     </services>
-    
+
 </container>

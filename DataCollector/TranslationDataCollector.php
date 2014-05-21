@@ -31,25 +31,21 @@ class TranslationDataCollector extends DataCollector
     {
         if ($controller = $request->get('_controller')) {
             preg_match('/(.+)\\\\(.+Bundle)\\\\Controller\\\\(.+)Controller::(.+)Action/', $controller, $matches);
-            if($matches)
-            {
+            if ($matches) {
                 $this->data['cache_key'] = array(
                     'bundle' => $matches[1].$matches[2],
                     'controller' => $matches[3],
                     'action' => $matches[4]);
             }
         }
-        
+
         $this->data['messages'] = array();
         $this->data['unatranslated_count'] = 0;
-        
-        foreach($this->container->get('translator')->getMessages() as $domain => $messages)
-        {
+
+        foreach ($this->container->get('translator')->getMessages() as $domain => $messages) {
             $this->data['messages'][$domain] = array_keys($messages);
-            foreach($messages as $m)
-            {
-                if(!$m->getContent())
-                {
+            foreach ($messages as $m) {
+                if (!$m->getContent()) {
                     $this->data['unatranslated_count']++;
                 }
             }
@@ -80,10 +76,10 @@ class TranslationDataCollector extends DataCollector
     public function getMessagesCount()
     {
         $count = 0;
-        foreach($this->data['messages'] as $domain => $messages)
-        {
+        foreach ($this->data['messages'] as $domain => $messages) {
             $count += count($messages);
         }
+
         return $count;
     }
 
@@ -95,7 +91,7 @@ class TranslationDataCollector extends DataCollector
     {
         return $this->data['unatranslated_count'];
     }
-    
+
     public function getCacheKey()
     {
         return $this->data['cache_key'];

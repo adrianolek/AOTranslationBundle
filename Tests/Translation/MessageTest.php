@@ -1,9 +1,8 @@
-<?php 
+<?php
 
 namespace AO\TranslationBundle\Tests\Translation;
 
 use AO\TranslationBundle\Translation\Message;
-
 
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,9 +10,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $message = new Message('foo', 'bar', 'baz');
         $message->setParameters(array('foo' => 'bar'));
-        
+
         $message->setCache('foo', 'bar', 'baz');
-        
+
         $this->assertTrue($message->isNew());
         $this->assertFalse($message->isCached());
         $this->assertEquals('foo:bar:baz', $message->getCacheKey());

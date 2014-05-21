@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace AO\TranslationBundle\Tests\Translation;
 
