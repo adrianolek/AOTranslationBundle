@@ -18,7 +18,7 @@ class Translation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Message", inversedBy="translations", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="Message", inversedBy="translations")
      */
     private $message;
 
