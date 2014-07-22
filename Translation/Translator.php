@@ -65,6 +65,10 @@ class Translator extends BaseTranslator
      */
     public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
     {
+        if (null === $locale) {
+            $locale = $this->getLocale();
+        }
+
         $message = $this->getMessage($id, $domain, $parameters, $locale);
         if ($message->getContent()) {
             // return entity translation
@@ -80,6 +84,10 @@ class Translator extends BaseTranslator
      */
     public function transChoice($id, $number, array $parameters = array(), $domain = 'messages', $locale = null)
     {
+        if (null === $locale) {
+            $locale = $this->getLocale();
+        }
+
         if (!isset($this->selector)) {
             $this->selector = new MessageSelector();
         }
