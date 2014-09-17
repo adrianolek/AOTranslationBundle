@@ -46,7 +46,7 @@ class Translation
 
     public function __toString()
     {
-        return $this->getContent();
+        return (string) $this->getContent();
     }
 
     public function getLocale()
