@@ -74,6 +74,11 @@ class Message
       $this->occurences = array();
       $this->usesCount = 0;
     }
+    
+    public function __toString()
+    {
+        return (string) $this->getIdentification();
+    }
 
     public function getId()
     {
