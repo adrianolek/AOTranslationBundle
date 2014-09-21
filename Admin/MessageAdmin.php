@@ -1,11 +1,15 @@
 <?php
 namespace AO\TranslationBundle\Admin;
 
+use AO\TranslationBundle\Form\Admin\TranslationsType;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
 
 class MessageAdmin extends Admin
 {
@@ -23,17 +27,21 @@ class MessageAdmin extends Admin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $locales = array_keys($this->container->getParameter('ao_translation.locales'));
-
+        $locales = $this->container->getParameter('ao_translation.locales');      
+        
         $formMapper
             ->add('identification', 'text', array('read_only' => true))
-            ->add('translations', 'sonata_type_collection', array(
-                'type_options' => array('delete' => false),
-            ), array(
-                'edit' => 'inline',
-                'inline' => 'table',
-            ))
-        ;
+            ->add('translations', new TranslationsType($this->getSubject(), $locales), array(
+                'required' => false, 'mapped' => false));
+
+        $formMapper->getFormBuilder()->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event){
+            $form = $event->getForm();
+            $message = $form->getData();
+            $data = $event->getData();
+            foreach($data['translations'] as $locale => $translation) {
+                $message->setTranslation($locale, $translation);
+            }
+        });
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

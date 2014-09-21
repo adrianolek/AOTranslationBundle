@@ -43,12 +43,6 @@
         </call>
       </service>
 
-      <service id="ao_translation.admin.translation" class="AO\TranslationBundle\Admin\TranslationAdmin">
-        <tag name="sonata.admin" manager_type="orm"/>
-        <argument />
-        <argument>AO\TranslationBundle\Entity\Translation</argument>
-        <argument />
-      </service>
     </services>
 
 </container>
