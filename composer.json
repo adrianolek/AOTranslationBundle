@@ -14,7 +14,7 @@
     "require": {
         "php": ">=5.3",
         "symfony/framework-bundle": "~2.1",
-        "stof/doctrine-extensions-bundle": "1.1.*@dev"
+        "stof/doctrine-extensions-bundle": "~1.1"
     },
     "suggest": {
         "sonata-project/admin-bundle": "Use translations admin backend.",
