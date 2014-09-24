@@ -1,0 +1,5 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+
+{% block title %}
+    {{ "title_edit"|trans({'%name%': admin.toString(object) }, 'SonataAdminBundle') }}
+{% endblock%}

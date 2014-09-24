@@ -30,7 +30,6 @@ class MessageAdmin extends Admin
         $locales = $this->container->getParameter('ao_translation.locales');      
         
         $formMapper
-            ->add('identification', 'text', array('read_only' => true))
             ->add('translations', new TranslationsType($this->getSubject(), $locales), array(
                 'required' => false, 'mapped' => false));
 

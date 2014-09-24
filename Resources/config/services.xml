@@ -41,6 +41,10 @@
         <call method="setContainer">
           <argument type="service" id="service_container" />
         </call>
+        <call method="setTemplate">
+          <argument>edit</argument>
+          <argument>AOTranslationBundle:MessageAdmin:edit.html.twig</argument>
+        </call>
       </service>
 
     </services>
