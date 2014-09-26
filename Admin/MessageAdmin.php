@@ -62,6 +62,7 @@ class MessageAdmin extends Admin
 
         foreach ($locales as $locale => $label) {
             $listMapper->add($locale, null, array(
+                'template' => 'AOTranslationBundle:MessageAdmin:translation.html.twig',
                 'label' => $label,
                 'code' => 'getLocaleTranslation',
                 'parameters' => array($locale)));

@@ -1,0 +1,3 @@
+{% extends admin.getTemplate('base_list_field') %}
+
+{%- block field %}{{ value|truncate(100) }}{% endblock -%}
