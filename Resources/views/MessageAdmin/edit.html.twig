@@ -10,6 +10,14 @@
         <div class="box box-success">
             <div class="box-body">
                 <div class="sonata-ba-collapsed-fields">
+                    {% if object.parameters %}
+                        <div class="form-group">
+                            <label class="control-label">Parameters</label>
+                            <div>
+                                {{ object.parameters|join(', ') }}
+                            </div>
+                        </div>
+                    {% endif %}
                     {% for field in form.translations %}
                         {{ form_row(field) }}
                     {% endfor %}
