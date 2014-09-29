@@ -112,10 +112,10 @@ class Translator extends BaseTranslator
      */
     protected function getMessage($id, $domain, $parameters, $locale)
     {
-        // strip whitespaces to prevent duplicate index errors 
+        // strip whitespaces to prevent duplicate index errors
         $id = trim($id);
         $domain = trim($domain);
-        
+
         if (!isset($locale)) {
           $locale = $this->getLocale();
         }
