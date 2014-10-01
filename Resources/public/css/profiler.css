@@ -1,0 +1,48 @@
+#ao_translations_form th.domain {
+    width: 150px;
+}
+
+#ao_translations_form th.parameters {
+    width: 100px;
+}
+
+#ao_translations_form textarea {
+    width: -moz-calc(100% - 4px);
+    width: -webkit-calc(100% - 4px);
+    width: calc(100% - 4px);
+    border: #aaa 1px solid;
+    padding: 0px 2px;
+}
+
+#ao_translations_form .focus textarea {
+    border-color: #777;
+    min-height: 100px;
+}
+
+#ao_translations_form ul.parameters li {
+    padding: 0px;
+}
+
+#ao_translations_form ul.parameters a {
+    text-decoration: none;
+}
+
+#ao_translations_form .search {
+    float: none;
+    padding-top: 0;
+}
+
+.flash {
+    padding: 8px 35px 8px 14px;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #fcf8e3;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.flash-notice {
+    color: #fff;
+    background-color: #aacd4e;
+}
