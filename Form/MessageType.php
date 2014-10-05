@@ -1,6 +1,5 @@
 <?php
 
-
 namespace AO\TranslationBundle\Form;
 
 use Symfony\Component\Form\AbstractType;

@@ -31,14 +31,13 @@ class TranslationListener
         $command = $event->getCommand();
         $class = get_class($command);
         preg_match('/^(.+Bundle)\\\\.+\\\\(.+)$/', $class, $matches);
-        if($matches) {
+        if ($matches) {
             $bundle = str_replace('\\', '', $matches[1]);
             $controller = $matches[2];
         } else {
             $bundle = '';
             $controller = '';
         }
-        
 
         $this->translator->setCommand($bundle, $controller, $command->getName());
     }
