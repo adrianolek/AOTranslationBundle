@@ -33,20 +33,6 @@
           <argument type="service" id="ao_translation.entity_manager" />
       </service>
 
-      <service id="ao_translation.admin.message" class="AO\TranslationBundle\Admin\MessageAdmin">
-        <tag name="sonata.admin" manager_type="orm" group="Translations" label="Message"/>
-        <argument />
-        <argument>AO\TranslationBundle\Entity\Message</argument>
-        <argument />
-        <call method="setContainer">
-          <argument type="service" id="service_container" />
-        </call>
-        <call method="setTemplate">
-          <argument>edit</argument>
-          <argument>AOTranslationBundle:MessageAdmin:edit.html.twig</argument>
-        </call>
-      </service>
-
     </services>
 
 </container>
