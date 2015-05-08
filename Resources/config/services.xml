@@ -29,7 +29,7 @@
           <tag name="kernel.event_listener" event="kernel.terminate" method="onTerminate" />
           <tag name="kernel.event_listener" event="console.command" method="onCommand" />
           <tag name="kernel.event_listener" event="console.terminate" method="onTerminate" />
-          <argument type="service" id="translator" />
+          <argument type="service" id="translator.default" />
           <argument type="service" id="ao_translation.entity_manager" />
       </service>
 
