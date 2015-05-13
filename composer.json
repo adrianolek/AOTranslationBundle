@@ -16,6 +16,9 @@
         "symfony/framework-bundle": "~2.1",
         "stof/doctrine-extensions-bundle": "~1.1"
     },
+    "require-dev": {
+      "phpunit/phpunit": "~4.0"
+    },
     "suggest": {
         "sonata-project/admin-bundle": "Use translations admin backend.",
         "sonata-project/doctrine-orm-admin-bundle": "Use translations admin backend."
